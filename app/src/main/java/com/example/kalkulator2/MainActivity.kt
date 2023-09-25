@@ -140,16 +140,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.btnDivide -> {
-                if (ob != 0.0) {
-                    if (dzialanie != "/") {
-                        dzialanie = "/"
-                        press = ""
-                    } else {
-                        press = wykonajDzialanie(dzialanie!!, ob!!, pop!!).toString()
-                        dzialanie = null
-                        switch = true
-                    }
-                } else press = "0"
+                if (dzialanie != "/") {
+                    dzialanie = "/"
+                    press = ""
+                } else {
+                    press = wykonajDzialanie(dzialanie!!, ob!!, pop!!).toString()
+                    dzialanie = null
+                    switch = true
+                }
             }
 
             R.id.btnMultiply -> {
@@ -168,7 +166,7 @@ class MainActivity : AppCompatActivity() {
                     press = wykonajDzialanie(dzialanie!!, ob!!, pop!!).toString()
                     dzialanie = null
                     switch = true
-                } else press = "0"
+                } else press = "0"; pom = "0"
             }
         }
         if (dzialanie == null) {
@@ -188,14 +186,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun wykonajDzialanie(dzialanie: String, obecna: Double, poprzednia: Double): Double? {
+    fun wykonajDzialanie(dzialanie: String, obecna: Double, poprzednia: Double): Double {
         when (dzialanie) {
             "+" -> return poprzednia + obecna
             "*" -> return poprzednia * obecna
-            "/" -> return poprzednia / obecna
+            "/" -> if (obecna != 0.0) return poprzednia / obecna
             "-" -> return poprzednia - obecna
         }
-        return null
+        return 0.0
     }
 
     fun clear(v: View) {
