@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var wysw: TextView
     var obecne: Double? = null
     var poprzednie: Double? = null
+    var dzialanie: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,10 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     fun click(v: View) {
         var press: String = ""
-        var dzialanie: String? = null
-        //if (wysw.text == "0")
-        //    wysw.text = ""
-        //var pom = wysw.text.toString().toDouble()
+        var pom: Double
         when (v.id) {
             R.id.btn0 -> press = "0"
             R.id.btn1 -> press = "1"
@@ -36,32 +34,34 @@ class MainActivity : AppCompatActivity() {
             R.id.btn7 -> press = "7"
             R.id.btn8 -> press = "8"
             R.id.btn9 -> press = "9"
-            R.id.btnPlus -> {
-                if (dzialanie != "+") {
-                    dzialanie = "+"
-                } else {
-                    if (wysw.text.toString().toDouble() == 0.0) {
-                        poprzednie = wysw.text.toString().toDouble()
-                    }
-                }
+            R.id.btnPlus -> dzialanie = "+"
+            R.id.btnEquals -> {
+                wysw.text = wykonajDzialanie(dzialanie!!, obecne!!, poprzednie!!).toString()
+                dzialanie = null
             }
-            R.id.btnMinus -> dzialanie = "-"
-            R.id.btnDivide -> dzialanie = "/"
-            R.id.btnMultiply -> dzialanie = "*"
-            R.id.btnEquals -> dzialanie = "="
         }
         if (dzialanie == null) {
-            if (wysw.text.toString().toDouble() != 0.0) {
-                poprzednie = wysw.text.toString().toDouble()
-                obecne = poprzednie!! + press.toDouble()
-                wysw.text = obecne.toString()
-            } else {
+            if (wysw.text.toString() == "0") {
+                poprzednie = 0.0
                 obecne = press.toDouble()
-                wysw.text = obecne.toString()
+                wysw.text = press
+            } else {
+                poprzednie = wysw.text.toString().toDouble()
+                wysw.text = wysw.text.toString() + press
+                obecne = wysw.text.toString().toDouble()
+
             }
-        } else {
-            wysw.text = "inne"
         }
+    }
+
+    fun wykonajDzialanie(dzialanie: String, obecna: Double, poprzednia: Double): Double? {
+        when (dzialanie) {
+            "+" -> return obecna + poprzednia
+            "*" -> return obecna * poprzednia
+            "/" -> return obecna / poprzednia
+            "-" -> return obecna - poprzednia
+        }
+        return null
     }
 
 
