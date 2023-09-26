@@ -166,7 +166,10 @@ class MainActivity : AppCompatActivity() {
                     press = wykonajDzialanie(dzialanie!!, ob!!, pop!!).toString()
                     dzialanie = null
                     switch = true
-                } else press = "0"; pom = "0"
+                } else {
+                    press = "0"
+                    pom = "0"
+                }
             }
         }
         if (dzialanie == null) {
