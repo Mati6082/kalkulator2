@@ -22,105 +22,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun click(v: View) {
-        if (dzialanie == null) pom = wysw.text.toString()
-        else pom = "0"
-        wysw.text = ""
-        var press = ""
+        if (dzialanie != null || (dzialanie != null && wysw.text.toString().toDouble()==pop)) pom = "0"
+        else pom = wysw.text.toString()
+        wysw.text = "0"
+        var press = "0"
         when (v.id) {
-            R.id.btn0 -> {
-                if (switch) {
-                    wysw.text = "0"
-                    switch = false
-                    pom = ""
-                }
-                press = "0"
-            }
-
-            R.id.btn1 -> {
-                if (switch) {
-                    wysw.text = "1"
-                    switch = false
-                    pom = ""
-                }
-                press = "1"
-            }
-
-            R.id.btn2 -> {
-                if (switch) {
-                    wysw.text = "2"
-                    switch = false
-                    pom = ""
-                }
-                press = "2"
-            }
-
-            R.id.btn3 -> {
-                if (switch) {
-                    wysw.text = "3"
-                    switch = false
-                    pom = ""
-                }
-                press = "3"
-            }
-
-            R.id.btn4 -> {
-                if (switch) {
-                    wysw.text = "4"
-                    switch = false
-                    pom = ""
-                }
-                press = "4"
-            }
-
-            R.id.btn5 -> {
-                if (switch) {
-                    wysw.text = "5"
-                    switch = false
-                    pom = ""
-                }
-                press = "5"
-            }
-
-            R.id.btn6 -> {
-                if (switch) {
-                    wysw.text = "6"
-                    switch = false
-                    pom = ""
-                }
-                press = "6"
-            }
-
-            R.id.btn7 -> {
-                if (switch) {
-                    wysw.text = "7"
-                    switch = false
-                    pom = ""
-                }
-                press = "7"
-            }
-
-            R.id.btn8 -> {
-                if (switch) {
-                    wysw.text = "8"
-                    switch = false
-                    pom = ""
-                }
-                press = "8"
-            }
-
-            R.id.btn9 -> {
-                if (switch) {
-                    wysw.text = "9"
-                    switch = false
-                    pom = ""
-                }
-                press = "9"
-            }
+            R.id.btn0 -> press = "0"
+            R.id.btn1 -> press = "1"
+            R.id.btn2 -> press = "2"
+            R.id.btn3 -> press = "3"
+            R.id.btn4 -> press = "4"
+            R.id.btn5 -> press = "5"
+            R.id.btn6 -> press = "6"
+            R.id.btn7 -> press = "7"
+            R.id.btn8 -> press = "8"
+            R.id.btn9 -> press = "9"
 
             R.id.btnPlus -> {
                 if (dzialanie != "+") {
                     dzialanie = "+"
-                    press = ""
+                    press = "0"
+                    pom = "0"
                 } else {
                     press = wykonajDzialanie(dzialanie!!, ob!!, pop!!).toString()
                     dzialanie = null
@@ -131,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             R.id.btnMinus -> {
                 if (dzialanie != "-") {
                     dzialanie = "-"
-                    press = ""
+                    press = "0"
                 } else {
                     press = wykonajDzialanie(dzialanie!!, ob!!, pop!!).toString()
                     dzialanie = null
@@ -142,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             R.id.btnDivide -> {
                 if (dzialanie != "/") {
                     dzialanie = "/"
-                    press = ""
+                    press = "0"
                 } else {
                     press = wykonajDzialanie(dzialanie!!, ob!!, pop!!).toString()
                     dzialanie = null
@@ -153,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             R.id.btnMultiply -> {
                 if (dzialanie != "*") {
                     dzialanie = "*"
-                    press = ""
+                    press = "0"
                 } else {
                     press = wykonajDzialanie(dzialanie!!, ob!!, pop!!).toString()
                     dzialanie = null
@@ -164,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             R.id.btnEquals -> {
                 if (dzialanie != null && ob != null && pop != null) {
                     press = wykonajDzialanie(dzialanie!!, ob!!, pop!!).toString()
-                    dzialanie = null
+                    dzialanie = "="
                     switch = true
                 } else {
                     press = "0"
@@ -180,11 +102,12 @@ class MainActivity : AppCompatActivity() {
             }
             pop = wysw.text.toString().toDouble()
         } else {
-            if (pom == "0" && press != "") {
+            if (pom == "0") {
                 wysw.text = press
-            } else if (press != "") {
-                wysw.text = pom + press
-            } else wysw.text = pop.toString()
+            } else if (dzialanie == "="){
+                wysw.text = press
+                dzialanie = null
+            } else wysw.text = pom + press
             ob = wysw.text.toString().toDouble()
         }
     }
